@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mainContainer_indicator_marginHorizontal">20dp</dimen>
+    <dimen name="mainContainer_indicator_marginBottom">50dp</dimen>
+    <dimen name="mainContainer_indicator_cornerRadius">50dp</dimen>
+</resources>
