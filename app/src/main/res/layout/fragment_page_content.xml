@@ -8,7 +8,8 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/newNotification_btn"
         android:layout_width="@dimen/pageContent_newNotificationBtn_size"
-        android:layout_height="@dimen/pageContent_newNotificationBtn_size"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1"
         android:contentDescription="@string/pageContent_newNotificationBtn_contentDescription"
         android:fontFamily="sans-serif"
         android:text="@string/pageContent_newNotificationBtn_text"
