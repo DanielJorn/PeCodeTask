@@ -2,7 +2,9 @@ name: PR_unit_tests
 
 on:
   pull_request:
-    branches: [master]
+    branches: 
+    - master
+    - develop
 
 jobs:
   Unit-test:
