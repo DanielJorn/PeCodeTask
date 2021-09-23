@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">PeCodeTask</string>
-    <string name="create_new_notification">Create new notification</string>
     <string name="mainContainer_minusBtn_contentDescription">Minus button</string>
     <string name="mainContainer_plusBtn_contentDescription">Plus button</string>
+    <string name="pageContent_newNotificationBtn_text">Create new notification</string>
+    <string name="pageContent_newNotificationBtn_contentDescription">New notification button</string>
 </resources>

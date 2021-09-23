@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="mediumCornerRadius">50dp</dimen>
+    <dimen name="largeCornerRadius">100dp</dimen>
+
     <dimen name="mainContainer_indicator_marginHorizontal">20dp</dimen>
     <dimen name="mainContainer_indicator_marginBottom">50dp</dimen>
-    <dimen name="mainContainer_indicator_cornerRadius">50dp</dimen>
+    <dimen name="mainContainer_indicator_cornerRadius">@dimen/mediumCornerRadius</dimen>
+    <dimen name="pageContent_newNotificationBtn_cornerRadius">@dimen/largeCornerRadius</dimen>
+    <dimen name="pageContent_newNotificationBtn_size">166dp</dimen>
+    <dimen name="mainContainer_indicatorTextSize">24sp</dimen>
 </resources>

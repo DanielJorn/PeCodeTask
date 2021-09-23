@@ -7,10 +7,10 @@
         <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/drawable/page_indicator_background.xml" value="0.15833333333333333" />
         <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/drawable/plus.xml" value="0.15885416666666666" />
         <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/font/roboto.xml" value="0.1" />
-        <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/layout/fragment_page_container.xml" value="0.22" />
-        <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/layout/fragment_page_content.xml" value="0.67" />
-        <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/layout/fragment_view_pager_container.xml" value="0.22" />
+        <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/layout/fragment_page_content.xml" value="0.25" />
+        <entry key="..\:/=Android/Projects/PeCodeTask/app/src/main/res/layout/fragment_view_pager_container.xml" value="0.2" />
       </map>
     </option>
   </component>

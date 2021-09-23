@@ -7,7 +7,7 @@
     android:background="@color/bondi_blue">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pageContent_viewPager"
+        android:id="@+id/viewPagerContainer_viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +39,7 @@
             android:layout_gravity="center"
             android:fontFamily="sans-serif"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="@dimen/mainContainer_indicatorTextSize"
             tools:text="1" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
