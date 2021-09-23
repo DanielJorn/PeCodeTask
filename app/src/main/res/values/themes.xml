@@ -13,4 +13,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="defaultFab">
+        <item name="tint">@color/fountain_blue</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
 </resources>

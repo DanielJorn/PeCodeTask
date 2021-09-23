@@ -29,10 +29,9 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/white"
             android:contentDescription="@string/mainContainer_minusBtn_contentDescription"
             android:src="@drawable/minus"
-            app:tint="@color/fountain_blue" />
+            style="@style/defaultFab"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,10 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:backgroundTint="@color/white"
             android:contentDescription="@string/mainContainer_plusBtn_contentDescription"
             android:src="@drawable/plus"
-            app:tint="@color/fountain_blue" />
+            style="@style/defaultFab"/>
 
     </androidx.cardview.widget.CardView>
 
