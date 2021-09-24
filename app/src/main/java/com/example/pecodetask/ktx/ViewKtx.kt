@@ -1,4 +1,4 @@
-package com.example.pecodetask
+package com.example.pecodetask.ktx
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView
 
 
 fun View.animateGone() {
+    cancelAnimation()
     val finalAlpha = 0f
 
     animate(finalAlpha) { view ->
@@ -15,8 +16,15 @@ fun View.animateGone() {
 }
 
 fun View.animateVisible() {
+    cancelAnimation()
+
     visibility = CardView.VISIBLE
     animate(1f)
+}
+
+private fun View.cancelAnimation() {
+    clearAnimation()
+    animate().cancel()
 }
 
 private fun View.animate(

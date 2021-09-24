@@ -1,4 +1,4 @@
-package com.example.pecodetask
+package com.example.pecodetask.features.pageContainer
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
+import com.example.pecodetask.features.pageContainer.adapter.ViewPagerAdapter
 
 private const val TAG = "PagerContainerFragment"
 
@@ -36,6 +37,8 @@ class ViewPagerContainerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.viewPager.adapter = pagerAdapter
         binding.viewPager.registerOnPageChangeCallback(pageChangeCallback)
+        binding.pageIndicator.plusButtonClickListener { pagerAdapter.addPage() }
+        binding.pageIndicator.minusButtonClickListener { pagerAdapter.removePage() }
     }
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {

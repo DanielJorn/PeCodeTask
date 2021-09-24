@@ -1,15 +1,17 @@
-package com.example.pecodetask
+package com.example.pecodetask.features.pageContainer.customView
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import com.example.pecodetask.R
 import com.example.pecodetask.databinding.ViewPageIndicatorBinding
+import com.example.pecodetask.ktx.animateGone
+import com.example.pecodetask.ktx.animateVisible
 
 class PageIndicatorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -23,10 +25,13 @@ class PageIndicatorView @JvmOverloads constructor(
     fun hideMinusButton() = minusButton.animateGone()
     fun hideMinusButtonInstantly() = minusButton.setVisibility(GONE)
     fun showMinusButton() = minusButton.animateVisible()
+    fun changePageNumber(pageNumber: Int) = pageNumberTextSwitcher.setText("$pageNumber")
 
-    fun changePageNumber(pageNumber: Int) {
-        pageNumberTextSwitcher.setText("$pageNumber")
-    }
+    fun plusButtonClickListener(clickListener: () -> Unit) =
+        plusButton.setOnClickListener { clickListener() }
+
+    fun minusButtonClickListener(clickListener: () -> Unit) =
+        minusButton.setOnClickListener { clickListener() }
 
     private fun initializeTextSwitcherSettings() {
         pageNumberTextSwitcher.setFactory {

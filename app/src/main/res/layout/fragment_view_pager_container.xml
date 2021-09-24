@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.pecodetask.PageIndicatorView
+    <com.example.pecodetask.features.pageContainer.customView.PageIndicatorView
         android:id="@+id/pageIndicator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
