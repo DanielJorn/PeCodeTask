@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.pecodetask.R
+import com.example.pecodetask.features.pageContainer.PagerItem
 
 class PageContentFragment: Fragment() {
     override fun onCreateView(
@@ -17,8 +18,9 @@ class PageContentFragment: Fragment() {
     companion object {
         private const val PAGE_NUMBER = "PAGE_NUMBER"
 
-        fun newInstance(pageNumber: Int): PageContentFragment {
+        fun newInstance(data: PagerItem): PageContentFragment {
             val bundle = Bundle().apply {
+                val pageNumber = data.pageNumber
                 putInt(PAGE_NUMBER, pageNumber)
             }
 
