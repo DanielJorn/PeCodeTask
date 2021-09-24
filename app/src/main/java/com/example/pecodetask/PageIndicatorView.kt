@@ -21,6 +21,7 @@ class PageIndicatorView @JvmOverloads constructor(
     private val pageNumberTextSwitcher get() = binding.pageNumberTextSwitcher
 
     fun hideMinusButton() = minusButton.animateGone()
+    fun hideMinusButtonInstantly() = minusButton.setVisibility(GONE)
     fun showMinusButton() = minusButton.animateVisible()
 
     fun changePageNumber(pageNumber: Int) {

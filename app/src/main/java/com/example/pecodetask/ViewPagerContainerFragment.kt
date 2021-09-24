@@ -28,12 +28,24 @@ class ViewPagerContainerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentViewPagerContainerBinding.inflate(inflater, container, false)
+
+        restoreStateOnCreation(savedInstanceState)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.viewPager.adapter = pagerAdapter
         binding.viewPager.registerOnPageChangeCallback(pageChangeCallback)
+    }
+
+    private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
+        if (isFirstPageWasSelectedInBundle(savedInstanceState)) {
+            binding.pageIndicator.hideMinusButtonInstantly()
+        }
+    }
+
+    private fun isFirstPageWasSelectedInBundle(savedInstanceState: Bundle?): Boolean {
+        return savedInstanceState == null
     }
 
     private fun onPageSelected(position: Int) {
@@ -58,13 +70,9 @@ class ViewPagerContainerFragment : Fragment() {
         binding.pageIndicator.showMinusButton()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         binding.viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
+        _binding = null
     }
 }
