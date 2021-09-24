@@ -36,6 +36,8 @@ class ViewPagerContainerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.viewPager.adapter = pagerAdapter
         binding.viewPager.registerOnPageChangeCallback(pageChangeCallback)
+        binding.pageIndicator.plusItemClickListener { pagerAdapter.addPage() }
+        binding.pageIndicator.minusItemClickListener { pagerAdapter.removePage() }
     }
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {

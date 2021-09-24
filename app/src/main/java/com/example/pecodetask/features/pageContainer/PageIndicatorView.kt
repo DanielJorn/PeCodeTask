@@ -30,6 +30,14 @@ class PageIndicatorView @JvmOverloads constructor(
         pageNumberTextSwitcher.setText("$pageNumber")
     }
 
+    fun plusItemClickListener(clickListener: () -> Unit) {
+        plusButton.setOnClickListener { clickListener() }
+    }
+
+    fun minusItemClickListener(clickListener: () -> Unit) {
+        minusButton.setOnClickListener { clickListener() }
+    }
+
     private fun initializeTextSwitcherSettings() {
         pageNumberTextSwitcher.setFactory {
             TextView(ContextThemeWrapper(context, R.style.pageNumberTextStyle), null, 0)

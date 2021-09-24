@@ -13,4 +13,18 @@ class PageContentFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_page_content, container, false)
+
+    companion object {
+        private const val PAGE_NUMBER = "PAGE_NUMBER"
+
+        fun newInstance(pageNumber: Int): PageContentFragment {
+            val bundle = Bundle().apply {
+                putInt(PAGE_NUMBER, pageNumber)
+            }
+
+            return PageContentFragment().apply {
+                arguments = bundle
+            }
+        }
+    }
 }
