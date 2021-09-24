@@ -1,4 +1,4 @@
-package com.example.pecodetask.features.pageContainer
+package com.example.pecodetask.features.pageContainer.customView
 
 import android.content.Context
 import android.util.AttributeSet
@@ -25,18 +25,13 @@ class PageIndicatorView @JvmOverloads constructor(
     fun hideMinusButton() = minusButton.animateGone()
     fun hideMinusButtonInstantly() = minusButton.setVisibility(GONE)
     fun showMinusButton() = minusButton.animateVisible()
+    fun changePageNumber(pageNumber: Int) = pageNumberTextSwitcher.setText("$pageNumber")
 
-    fun changePageNumber(pageNumber: Int) {
-        pageNumberTextSwitcher.setText("$pageNumber")
-    }
-
-    fun plusItemClickListener(clickListener: () -> Unit) {
+    fun plusButtonClickListener(clickListener: () -> Unit) =
         plusButton.setOnClickListener { clickListener() }
-    }
 
-    fun minusItemClickListener(clickListener: () -> Unit) {
+    fun minusButtonClickListener(clickListener: () -> Unit) =
         minusButton.setOnClickListener { clickListener() }
-    }
 
     private fun initializeTextSwitcherSettings() {
         pageNumberTextSwitcher.setFactory {

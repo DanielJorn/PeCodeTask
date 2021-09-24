@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.pecodetask.R
-import com.example.pecodetask.features.pageContainer.PagerItem
+import com.example.pecodetask.features.pageContainer.model.PagerItem
 
 class PageContentFragment: Fragment() {
     override fun onCreateView(
