@@ -1,7 +1,6 @@
 package com.example.pecodetask
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +36,28 @@ class ViewPagerContainerFragment : Fragment() {
         binding.viewPager.registerOnPageChangeCallback(pageChangeCallback)
     }
 
+    private fun onPageSelected(position: Int) {
+        val firstPageSelected = position == 0
+        if (firstPageSelected)
+            hideIndicatorMinusButton()
+        else
+            showIndicatorMinusButton()
+        changeIndicatorPageNumber(position)
+    }
+
+    private fun changeIndicatorPageNumber(pageIndex: Int) {
+        val pageNumber = pageIndex + 1
+        binding.pageIndicator.changePageNumber(pageNumber)
+    }
+
+    private fun hideIndicatorMinusButton() {
+        binding.pageIndicator.hideMinusButton()
+    }
+
+    private fun showIndicatorMinusButton() {
+        binding.pageIndicator.showMinusButton()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -45,9 +66,5 @@ class ViewPagerContainerFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         binding.viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
-    }
-
-    private fun onPageSelected(position: Int) {
-        Log.d(TAG, "onPageSelected: $position")
     }
 }
