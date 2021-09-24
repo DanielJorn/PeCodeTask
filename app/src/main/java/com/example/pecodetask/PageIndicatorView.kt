@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.example.pecodetask.databinding.ViewPageIndicatorBinding
 
 class PageIndicatorView @JvmOverloads constructor(
@@ -25,7 +27,7 @@ class PageIndicatorView @JvmOverloads constructor(
         pageNumberTextSwitcher.setText("$pageNumber")
     }
 
-    private fun initializeTextSwitcherSettings(context: Context) {
+    private fun initializeTextSwitcherSettings() {
         pageNumberTextSwitcher.setFactory {
             TextView(ContextThemeWrapper(context, R.style.pageNumberTextStyle), null, 0)
         }
@@ -38,8 +40,14 @@ class PageIndicatorView @JvmOverloads constructor(
         pageNumberTextSwitcher.outAnimation = outAnim
     }
 
+    private fun initializeCardSettings() {
+        backgroundTintList = ContextCompat.getColorStateList(context, R.color.transparent)
+        cardElevation = 0f
+    }
+
     init {
-        initializeTextSwitcherSettings(context)
+        initializeTextSwitcherSettings()
+        initializeCardSettings()
     }
 
     companion object {
