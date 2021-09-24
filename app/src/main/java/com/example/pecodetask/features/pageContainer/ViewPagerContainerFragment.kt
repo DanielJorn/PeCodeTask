@@ -1,4 +1,4 @@
-package com.example.pecodetask
+package com.example.pecodetask.features.pageContainer
 
 import android.os.Bundle
 import android.view.LayoutInflater

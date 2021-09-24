@@ -1,4 +1,4 @@
-package com.example.pecodetask
+package com.example.pecodetask.ktx
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
