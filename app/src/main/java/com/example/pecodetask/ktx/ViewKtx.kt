@@ -5,21 +5,21 @@ import android.animation.AnimatorListenerAdapter
 import android.view.View
 import androidx.cardview.widget.CardView
 
-
 fun View.animateGone() {
     cancelAnimation()
-    val finalAlpha = 0f
+    val fullyTransparentAlpha = 0f
 
-    animate(finalAlpha) { view ->
+    animate(fullyTransparentAlpha) { view ->
         view.visibility = CardView.GONE
     }
 }
 
 fun View.animateVisible() {
     cancelAnimation()
-
     visibility = CardView.VISIBLE
-    animate(1f)
+
+    val fullyOpaqueAlpha = 1f
+    animate(fullyOpaqueAlpha)
 }
 
 private fun View.cancelAnimation() {
@@ -32,12 +32,12 @@ private fun View.animate(
     completionListener: ((view: View) -> Unit)? = null,
 ) {
     val shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
-    val listener = if (completionListener == null)
-        null
-    else
-        object : AnimatorListenerAdapter() {
+    val listener = when (completionListener) {
+        null -> null
+        else -> object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) = completionListener(this@animate)
         }
+    }
 
     animate()
         .alpha(finalAlpha)

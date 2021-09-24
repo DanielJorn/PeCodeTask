@@ -40,12 +40,8 @@ class ViewPagerContainerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewPager.adapter = pagerAdapter
         viewPager.registerOnPageChangeCallback(pageChangeCallback)
-        pageIndicator.plusButtonClickListener {
-            pagerAdapter.addPage()
-            if (shouldScrollToCreatedPage())
-                scrollToLastPage()
-        }
-        pageIndicator.minusButtonClickListener { pagerAdapter.removePage() }
+        pageIndicator.plusButtonClickListener { onPlusButtonClicked() }
+        pageIndicator.minusButtonClickListener { onMinusButtonClicked() }
     }
 
     private fun shouldScrollToCreatedPage(): Boolean {
@@ -66,6 +62,16 @@ class ViewPagerContainerFragment : Fragment() {
 
     private fun isFirstPageWasSelectedInBundle(savedInstanceState: Bundle?): Boolean {
         return savedInstanceState == null
+    }
+
+    private fun onPlusButtonClicked() {
+        pagerAdapter.addPage()
+        if (shouldScrollToCreatedPage())
+            scrollToLastPage()
+    }
+
+    private fun onMinusButtonClicked() {
+        pagerAdapter.removePage()
     }
 
     private fun onPageSelected(position: Int) {
