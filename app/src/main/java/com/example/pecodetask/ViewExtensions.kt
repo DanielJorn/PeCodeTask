@@ -28,9 +28,7 @@ private fun View.animate(
         null
     else
         object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
-                completionListener(this@animate)
-            }
+            override fun onAnimationEnd(animation: Animator?) = completionListener(this@animate)
         }
 
     animate()

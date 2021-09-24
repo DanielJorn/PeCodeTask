@@ -22,4 +22,11 @@
     <style name="splashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash_screen</item>
     </style>
+
+    <style name="pageNumberTextStyle">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/mainContainer_indicatorTextSize</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

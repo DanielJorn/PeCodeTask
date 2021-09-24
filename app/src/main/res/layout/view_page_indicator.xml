@@ -14,15 +14,11 @@
         android:contentDescription="@string/mainContainer_minusBtn_contentDescription"
         android:src="@drawable/minus" />
 
-    <TextView
-        android:id="@+id/pageNumberTv"
+    <TextSwitcher
+        android:id="@+id/pageNumberTextSwitcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/white"
-        android:textSize="@dimen/mainContainer_indicatorTextSize"
         tools:text="1" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
