@@ -15,6 +15,12 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemId(position: Int) = items[position].pageNumber.toLong()
     override fun containsItem(itemId: Long) = items.any { it.pageNumber.toLong() == itemId }
 
+    val lastPageIndex
+        get() =
+            if (itemCount - 1 < 0)
+                0
+            else itemCount - 1
+
     fun addPage() {
         val newPage = PagerItem(itemCount + 1)
         val newList = items.toMutableList()

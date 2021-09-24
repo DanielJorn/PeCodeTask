@@ -15,6 +15,9 @@ class ViewPagerContainerFragment : Fragment() {
     private var _binding: FragmentViewPagerContainerBinding? = null
     private val binding get() = _binding!!
 
+    private val viewPager get() = binding.viewPager
+    private val pageIndicator get() = binding.pageIndicator
+
     private val pagerAdapter by lazy { ViewPagerAdapter(this) }
     private val pageChangeCallback by lazy {
         object : ViewPager2.OnPageChangeCallback() {
@@ -35,15 +38,29 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.viewPager.adapter = pagerAdapter
-        binding.viewPager.registerOnPageChangeCallback(pageChangeCallback)
-        binding.pageIndicator.plusButtonClickListener { pagerAdapter.addPage() }
-        binding.pageIndicator.minusButtonClickListener { pagerAdapter.removePage() }
+        viewPager.adapter = pagerAdapter
+        viewPager.registerOnPageChangeCallback(pageChangeCallback)
+        pageIndicator.plusButtonClickListener {
+            pagerAdapter.addPage()
+            if (shouldScrollToCreatedPage())
+                scrollToLastPage()
+        }
+        pageIndicator.minusButtonClickListener { pagerAdapter.removePage() }
+    }
+
+    private fun shouldScrollToCreatedPage(): Boolean {
+        val currentPage = viewPager.currentItem
+        val currentPageIsRightBeforeLastPage = currentPage == pagerAdapter.lastPageIndex - 1
+        return currentPageIsRightBeforeLastPage
+    }
+
+    private fun scrollToLastPage() {
+        viewPager.currentItem = pagerAdapter.lastPageIndex
     }
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
         if (isFirstPageWasSelectedInBundle(savedInstanceState)) {
-            binding.pageIndicator.hideMinusButtonInstantly()
+            pageIndicator.hideMinusButtonInstantly()
         }
     }
 
@@ -62,20 +79,20 @@ class ViewPagerContainerFragment : Fragment() {
 
     private fun changeIndicatorPageNumber(pageIndex: Int) {
         val pageNumber = pageIndex + 1
-        binding.pageIndicator.changePageNumber(pageNumber)
+        pageIndicator.changePageNumber(pageNumber)
     }
 
     private fun hideIndicatorMinusButton() {
-        binding.pageIndicator.hideMinusButton()
+        pageIndicator.hideMinusButton()
     }
 
     private fun showIndicatorMinusButton() {
-        binding.pageIndicator.showMinusButton()
+        pageIndicator.showMinusButton()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
+        viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
     }
 }
