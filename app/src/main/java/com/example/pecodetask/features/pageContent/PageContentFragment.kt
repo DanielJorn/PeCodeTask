@@ -20,8 +20,7 @@ class PageContentFragment: Fragment() {
 
         fun newInstance(data: PagerItem): PageContentFragment {
             val bundle = Bundle().apply {
-                val pageNumber = data.pageNumber
-                putInt(PAGE_NUMBER, pageNumber)
+                putLong(PAGE_NUMBER, data.pageNumber)
             }
 
             return PageContentFragment().apply {

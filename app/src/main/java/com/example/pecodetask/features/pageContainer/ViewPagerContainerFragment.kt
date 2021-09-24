@@ -19,11 +19,9 @@ class ViewPagerContainerFragment : Fragment() {
     private val pageIndicator get() = binding.pageIndicator
 
     private val pagerAdapter by lazy { ViewPagerAdapter(this) }
-    private val pageChangeCallback by lazy {
-        object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) =
-                this@ViewPagerContainerFragment.onPageSelected(position)
-        }
+    private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(pageIndex: Int) =
+            this@ViewPagerContainerFragment.onPageSelected(pageIndex)
     }
 
     override fun onCreateView(
@@ -34,14 +32,16 @@ class ViewPagerContainerFragment : Fragment() {
         _binding = FragmentViewPagerContainerBinding.inflate(inflater, container, false)
 
         restoreStateOnCreation(savedInstanceState)
+
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewPager.adapter = pagerAdapter
         viewPager.registerOnPageChangeCallback(pageChangeCallback)
-        pageIndicator.plusButtonClickListener { onPlusButtonClicked() }
-        pageIndicator.minusButtonClickListener { onMinusButtonClicked() }
+        pageIndicator.plusButtonClickListener(::onPlusButtonClicked)
+        pageIndicator.minusButtonClickListener(::onMinusButtonClicked)
     }
 
     private fun shouldScrollToCreatedPage(): Boolean {
@@ -55,13 +55,13 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
-        if (isFirstPageWasSelectedInBundle(savedInstanceState)) {
+        if (wasFirstPageSelectedInBundle(savedInstanceState)) {
             pageIndicator.hideMinusButtonInstantly()
         }
     }
 
-    private fun isFirstPageWasSelectedInBundle(savedInstanceState: Bundle?): Boolean {
-        return savedInstanceState == null
+    private fun wasFirstPageSelectedInBundle(savedInstanceState: Bundle?): Boolean {
+        return savedInstanceState == null // TODO
     }
 
     private fun onPlusButtonClicked() {
@@ -74,13 +74,12 @@ class ViewPagerContainerFragment : Fragment() {
         pagerAdapter.removePage()
     }
 
-    private fun onPageSelected(position: Int) {
-        val firstPageSelected = position == 0
-        if (firstPageSelected)
-            hideIndicatorMinusButton()
-        else
-            showIndicatorMinusButton()
-        changeIndicatorPageNumber(position)
+    private fun onPageSelected(pageIndex: Int) {
+        when (pageIndex) {
+            0 -> hideIndicatorMinusButton()
+            else -> showIndicatorMinusButton()
+        }
+        changeIndicatorPageNumber(pageIndex)
     }
 
     private fun changeIndicatorPageNumber(pageIndex: Int) {
