@@ -18,4 +18,8 @@
         <item name="tint">@color/fountain_blue</item>
         <item name="backgroundTint">@color/white</item>
     </style>
+    
+    <style name="splashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash_screen</item>
+    </style>
 </resources>
