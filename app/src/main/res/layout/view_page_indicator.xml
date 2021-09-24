@@ -7,7 +7,7 @@
     tools:parentTag="androidx.cardview.widget.CardView">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/pageIndicator_minusBtn"
+        android:id="@+id/minusBtn"
         style="@style/defaultFab"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -15,7 +15,7 @@
         android:src="@drawable/minus" />
 
     <TextView
-        android:id="@+id/pageIndicator_pageNumberTv"
+        android:id="@+id/pageNumberTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -26,7 +26,7 @@
         tools:text="1" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/pageIndicator_plusBtn"
+        android:id="@+id/plusBtn"
         style="@style/defaultFab"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

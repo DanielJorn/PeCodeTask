@@ -2,30 +2,23 @@ package com.example.pecodetask
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.TextView
+import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.pecodetask.databinding.ViewPageIndicatorBinding
 
 class PageIndicatorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
+    private val binding = ViewPageIndicatorBinding.inflate(LayoutInflater.from(context), this)
 
-    init {
-        inflate(context, R.layout.view_page_indicator, this)
-    }
+    private val minusButton get() = binding.minusBtn
+    private val plusButton get() = binding.plusBtn
+    private val pageNumberTextView get() = binding.pageNumberTv
 
-    fun hideMinusButton() {
-        val minusButton = findViewById<FloatingActionButton>(R.id.pageIndicator_minusBtn)
-        minusButton.visibility = GONE
-    }
-
-    fun showMinusButton() {
-        val minusButton = findViewById<FloatingActionButton>(R.id.pageIndicator_minusBtn)
-        minusButton.visibility = VISIBLE
-    }
+    fun hideMinusButton() = minusButton.animateGone()
+    fun showMinusButton() = minusButton.animateVisible()
 
     fun changePageNumber(pageNumber: Int) {
-        val pageNumberTextView = findViewById<TextView>(R.id.pageIndicator_pageNumberTv)
         pageNumberTextView.text = "$pageNumber"
     }
 }
