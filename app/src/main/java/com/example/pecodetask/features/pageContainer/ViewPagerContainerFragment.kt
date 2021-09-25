@@ -47,7 +47,12 @@ class ViewPagerContainerFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(PAGES_COUNT_BUNDLE_KEY, pagerAdapter.itemCount)
         outState.putInt(SELECTED_PAGE_BUNDLE_KEY, viewPager.currentItem)
+        outState.putBoolean(MINUS_BUTTON_HIDDEN_BUNDLE_KEY, isMinusButtonHidden())
     }
+
+    private fun isMinusButtonHidden() = isFirstPageSelected()
+
+    private fun isFirstPageSelected() = viewPager.currentItem == 0
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
         restoreMinusButtonVisibility(savedInstanceState)
@@ -57,9 +62,9 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun restoreMinusButtonVisibility(savedInstanceState: Bundle?) {
-        when (wasMinusButtonVisible(savedInstanceState)) {
-            true -> pageIndicator.showMinusButton()
-            else -> pageIndicator.hideMinusButtonInstantly()
+        when (wasMinusButtonHidden(savedInstanceState)) {
+            true -> pageIndicator.hideMinusButtonInstantly()
+            false -> pageIndicator.showMinusButton()
         }
     }
 
@@ -87,9 +92,9 @@ class ViewPagerContainerFragment : Fragment() {
 
     private fun getSavedSelectedPage(state: Bundle) = state.getInt(SELECTED_PAGE_BUNDLE_KEY, 1)
 
-    private fun wasMinusButtonVisible(state: Bundle?): Boolean {
+    private fun wasMinusButtonHidden(state: Bundle?): Boolean {
         if (state == null) return true
-        return state.getBoolean(MINUS_BUTTON_VISIBLE_BUNDLE_KEY, false)
+        return state.getBoolean(MINUS_BUTTON_HIDDEN_BUNDLE_KEY, true)
     }
 
     private fun onPlusButtonClicked() {
@@ -135,6 +140,6 @@ class ViewPagerContainerFragment : Fragment() {
     companion object {
         private const val PAGES_COUNT_BUNDLE_KEY = "PAGES_COUNT_BUNDLE_KEY"
         private const val SELECTED_PAGE_BUNDLE_KEY = "SELECTED_PAGE_BUNDLE_KEY"
-        private const val MINUS_BUTTON_VISIBLE_BUNDLE_KEY = "MINUS_BUTTON_VISIBLE_BUNDLE_KEY"
+        private const val MINUS_BUTTON_HIDDEN_BUNDLE_KEY = "MINUS_BUTTON_HIDDEN_BUNDLE_KEY"
     }
 }
