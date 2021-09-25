@@ -33,21 +33,24 @@ class PageContentFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.notificationClick.observe(viewLifecycleOwner) {
-            val title = getString(R.string.notification_title)
-            val text = getString(R.string.notification_text, getArgumentsPageNumber())
-
-            showNotification(NotificationData(title, text))
-        }
+        viewModel.notificationClick.observe(viewLifecycleOwner) { showNotification(it) }
 
         return binding.root
     }
 
     private fun showNotification(data: NotificationData) {
-        sendNotification(requireContext(), data.title, data.text)
+        val title = getString(R.string.notification_title)
+        val text = getString(R.string.notification_text, data.pageNumber)
+
+        sendNotification(requireContext(), title, text)
     }
 
-    private fun sendNotification(context: Context, title: String, text: String, notificationId: Int = Random().nextInt()) {
+    private fun sendNotification(
+        context: Context,
+        title: String,
+        text: String,
+        notificationId: Int = Random().nextInt()
+    ) {
         val notificationManager = getNotificationManager(context)
 
         if (needToCreateNotificationChannel()) {
@@ -76,11 +79,11 @@ class PageContentFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(
-        notificationManager: NotificationManager
-    ) {
+    private fun createNotificationChannel(notificationManager: NotificationManager) {
         val channel = NotificationChannel(
-            NOTIFICATION_CHANNEL_ID, getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT
+            NOTIFICATION_CHANNEL_ID,
+            getString(R.string.app_name),
+            NotificationManager.IMPORTANCE_DEFAULT
         )
         notificationManager.createNotificationChannel(channel)
     }

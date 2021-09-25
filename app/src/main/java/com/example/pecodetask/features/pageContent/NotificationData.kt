@@ -1,6 +1,5 @@
 package com.example.pecodetask.features.pageContent
 
 data class NotificationData(
-    val title: String,
-    val text: String,
+    val pageNumber: Long
 )
