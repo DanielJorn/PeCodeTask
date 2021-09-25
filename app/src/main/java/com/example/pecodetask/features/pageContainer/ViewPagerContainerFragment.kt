@@ -66,7 +66,9 @@ class ViewPagerContainerFragment : Fragment() {
     private fun restoreSelectedPage(state: Bundle?) {
         if (state == null) return
         val savedSelectedPage = getSavedSelectedPage(state)
-        viewPager.currentItem = savedSelectedPage
+
+        val needAnimation = false
+        viewPager.setCurrentItem(savedSelectedPage, needAnimation)
     }
 
     private fun restoreCountOfCreatedPages(savedInstanceState: Bundle?) {
