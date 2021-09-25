@@ -1,14 +1,15 @@
 package com.example.pecodetask.features.pageContent.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import com.example.pecodetask.features.pageContent.domain.NotificationRepository
 import com.example.pecodetask.features.pageContent.domain.model.NotificationData
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PageContentViewModel @AssistedInject constructor(
+    private val notificationRepository: NotificationRepository,
     @Assisted private val pageNumber: Long
 ) : ViewModel() {
 
@@ -16,7 +17,10 @@ class PageContentViewModel @AssistedInject constructor(
 
     val notificationClick: LiveData<NotificationData> get() = _notificationClick
     fun onNewNotificationClick() {
-        _notificationClick.value = NotificationData(pageNumber)
+        viewModelScope.launch(Dispatchers.IO) {
+            val createdNotification = notificationRepository.saveNewNotification(pageNumber)
+            _notificationClick.postValue(createdNotification)
+        }
     }
 
     @dagger.assisted.AssistedFactory
