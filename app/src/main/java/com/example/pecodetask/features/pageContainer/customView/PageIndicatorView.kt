@@ -16,14 +16,17 @@ import com.example.pecodetask.ktx.animateVisible
 class PageIndicatorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
-    private val binding = ViewPageIndicatorBinding.inflate(LayoutInflater.from(context), this)
+    private val binding = ViewPageIndicatorBinding.inflate(LayoutInflater.from(context), this, true)
 
     private val minusButton get() = binding.minusBtn
     private val plusButton get() = binding.plusBtn
     private val pageNumberTextSwitcher get() = binding.pageNumberTextSwitcher
 
+
     fun hideMinusButton() = minusButton.animateGone()
-    fun hideMinusButtonInstantly() = minusButton.setVisibility(GONE)
+    fun hideMinusButtonInstantly() {
+        minusButton.visibility = GONE
+    }
     fun showMinusButton() = minusButton.animateVisible()
     fun changePageNumber(pageNumber: Int) = pageNumberTextSwitcher.setText("$pageNumber")
 

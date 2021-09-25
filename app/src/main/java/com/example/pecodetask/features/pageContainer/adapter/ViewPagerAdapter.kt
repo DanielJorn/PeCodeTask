@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.pecodetask.features.pageContainer.model.PagerItem
 import com.example.pecodetask.features.pageContent.PageContentFragment
+import kotlin.math.max
 
 class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
@@ -12,17 +13,13 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     override fun createFragment(position: Int) = PageContentFragment.newInstance(items[position])
     override fun getItemCount() = items.size
-    override fun getItemId(position: Int) = items[position].pageNumber.toLong()
-    override fun containsItem(itemId: Long) = items.any { it.pageNumber.toLong() == itemId }
+    override fun getItemId(position: Int) = items[position].pageNumber
+    override fun containsItem(itemId: Long) = items.any { it.pageNumber == itemId }
 
-    val lastPageIndex
-        get() =
-            if (itemCount - 1 < 0)
-                0
-            else itemCount - 1
+    val lastPageIndex get() = max(0, itemCount - 1)
 
     fun addPage() {
-        val newPage = PagerItem(itemCount + 1)
+        val newPage = PagerItem((itemCount + 1).toLong())
         val newList = items.toMutableList()
         newList.add(newPage)
         setItems(newList)
@@ -34,9 +31,15 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         setItems(newList)
     }
 
+    fun setPageCount(pageCount: Int) {
+        val newList = List(pageCount) { pageIndex -> PagerItem((pageIndex + 1).toLong()) }
+        setItems(newList)
+    }
+
     private fun setItems(newItems: List<PagerItem>) {
         val callback = PagerDiffUtil(items, newItems)
         val diff = DiffUtil.calculateDiff(callback)
+
         items.clear()
         items.addAll(newItems)
         diff.dispatchUpdatesTo(this)
