@@ -4,10 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.example.pecodetask.R
 import com.example.pecodetask.databinding.ViewPageIndicatorBinding
 import com.example.pecodetask.ktx.animateGone
@@ -15,7 +15,7 @@ import com.example.pecodetask.ktx.animateVisible
 
 class PageIndicatorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : CardView(context, attrs, defStyleAttr) {
     private val binding = ViewPageIndicatorBinding.inflate(LayoutInflater.from(context), this, true)
 
     private val minusButton get() = binding.minusBtn
