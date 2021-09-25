@@ -15,6 +15,13 @@ class PageContentFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_page_content, container, false)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val arguments = requireArguments()
+        val pageNumber = getArgumentsPageNumber(arguments)
+    }
+
+    private fun getArgumentsPageNumber(args: Bundle) = args.getLong(PAGE_NUMBER)
+
     companion object {
         private const val PAGE_NUMBER = "PAGE_NUMBER"
 
