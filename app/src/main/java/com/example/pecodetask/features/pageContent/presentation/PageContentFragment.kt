@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.pecodetask.R
 import com.example.pecodetask.databinding.FragmentPageContentBinding
-import com.example.pecodetask.features.pageContainer.model.PagerItem
+import com.example.pecodetask.features.pageContainer.domain.model.PageItem
 import com.example.pecodetask.features.pageContent.domain.model.NotificationData
 import java.util.*
 
@@ -100,7 +100,7 @@ class PageContentFragment : Fragment() {
         private const val PAGE_NUMBER = "PAGE_NUMBER"
         private const val NOTIFICATION_CHANNEL_ID = "com.example.pecodetask"
 
-        fun newInstance(data: PagerItem): PageContentFragment {
+        fun newInstance(data: PageItem): PageContentFragment {
             val bundle = Bundle().apply {
                 putLong(PAGE_NUMBER, data.pageNumber)
             }

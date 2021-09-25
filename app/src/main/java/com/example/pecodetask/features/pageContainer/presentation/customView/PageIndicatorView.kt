@@ -1,4 +1,4 @@
-package com.example.pecodetask.features.pageContainer.customView
+package com.example.pecodetask.features.pageContainer.presentation.customView
 
 import android.content.Context
 import android.util.AttributeSet

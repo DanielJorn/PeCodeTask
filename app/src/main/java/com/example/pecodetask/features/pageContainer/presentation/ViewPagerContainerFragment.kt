@@ -1,4 +1,4 @@
-package com.example.pecodetask.features.pageContainer
+package com.example.pecodetask.features.pageContainer.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
-import com.example.pecodetask.features.pageContainer.adapter.ViewPagerAdapter
+import com.example.pecodetask.features.pageContainer.presentation.adapter.ViewPagerAdapter
 
 class ViewPagerContainerFragment : Fragment() {
     private var _binding: FragmentViewPagerContainerBinding? = null
