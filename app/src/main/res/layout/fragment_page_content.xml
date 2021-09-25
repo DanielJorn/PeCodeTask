@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.example.pecodetask.features.pageContent.PageContentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,15 +18,12 @@
             android:layout_width="@dimen/pageContent_newNotificationBtn_size"
             android:layout_height="0dp"
             android:contentDescription="@string/pageContent_newNotificationBtn_contentDescription"
-            android:fontFamily="sans-serif"
             android:text="@string/pageContent_newNotificationBtn_text"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            app:cornerRadius="@dimen/pageContent_newNotificationBtn_cornerRadius"
+            style="@style/roundMaterialButton"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.538"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3" />
