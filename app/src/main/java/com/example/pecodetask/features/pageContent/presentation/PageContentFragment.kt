@@ -1,4 +1,4 @@
-package com.example.pecodetask.features.pageContent
+package com.example.pecodetask.features.pageContent.presentation
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import com.example.pecodetask.R
 import com.example.pecodetask.databinding.FragmentPageContentBinding
 import com.example.pecodetask.features.pageContainer.model.PagerItem
+import com.example.pecodetask.features.pageContent.domain.model.NotificationData
 import java.util.*
 
 class PageContentFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.example.pecodetask.features.pageContent
+package com.example.pecodetask.features.pageContent.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

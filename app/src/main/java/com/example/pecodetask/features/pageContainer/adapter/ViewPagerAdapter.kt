@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.pecodetask.features.pageContainer.model.PagerItem
-import com.example.pecodetask.features.pageContent.PageContentFragment
+import com.example.pecodetask.features.pageContent.presentation.PageContentFragment
 import kotlin.math.max
 
 class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
