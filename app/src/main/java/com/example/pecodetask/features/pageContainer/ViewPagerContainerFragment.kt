@@ -21,12 +21,8 @@ class ViewPagerContainerFragment : Fragment() {
         override fun onPageSelected(pageIndex: Int) = onNewPageSelected(pageIndex)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentViewPagerContainerBinding.inflate(inflater, container, false)
+    override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, state: Bundle?): View {
+        _binding = FragmentViewPagerContainerBinding.inflate(inflater, root, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -49,10 +45,6 @@ class ViewPagerContainerFragment : Fragment() {
         outState.putInt(SELECTED_PAGE_BUNDLE_KEY, viewPager.currentItem)
         outState.putBoolean(MINUS_BUTTON_HIDDEN_BUNDLE_KEY, isMinusButtonHidden())
     }
-
-    private fun isMinusButtonHidden() = isFirstPageSelected()
-
-    private fun isFirstPageSelected() = viewPager.currentItem == 0
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
         restoreMinusButtonVisibility(savedInstanceState)
@@ -96,6 +88,10 @@ class ViewPagerContainerFragment : Fragment() {
         if (state == null) return true
         return state.getBoolean(MINUS_BUTTON_HIDDEN_BUNDLE_KEY, true)
     }
+
+    private fun isMinusButtonHidden() = isFirstPageSelected()
+
+    private fun isFirstPageSelected() = viewPager.currentItem == 0
 
     private fun onPlusButtonClicked() {
         pagerAdapter.addPage()
