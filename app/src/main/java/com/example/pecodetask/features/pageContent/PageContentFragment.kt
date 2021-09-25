@@ -6,17 +6,13 @@ import android.content.Context
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.pecodetask.R
 import com.example.pecodetask.databinding.FragmentPageContentBinding
 import com.example.pecodetask.features.pageContainer.model.PagerItem
@@ -49,27 +45,44 @@ class PageContentFragment : Fragment() {
     }
 
     private fun sendNotification(context: Context, title: String, text: String, notificationId: Int = Random().nextInt()) {
-        val channelId = "channelID"
+        val notificationManager = getNotificationManager(context)
+
+        if (needToCreateNotificationChannel()) {
+            createNotificationChannel(notificationManager)
+        }
+
+        val notificationBuilder = createNotificationBuilder(context, title, text)
+        notificationManager.notify(notificationId, notificationBuilder.build())
+    }
+
+    private fun getNotificationManager(context: Context) =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    private fun createNotificationBuilder(
+        context: Context,
+        title: String,
+        text: String
+    ): NotificationCompat.Builder {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder = NotificationCompat.Builder(context, channelId)
+        return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.pecode_logo)
             .setContentTitle(title)
             .setContentText(text)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
-
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId, "Channel human readable title", NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        notificationManager.notify(notificationId, notificationBuilder.build())
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(
+        notificationManager: NotificationManager
+    ) {
+        val channel = NotificationChannel(
+            NOTIFICATION_CHANNEL_ID, getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT
+        )
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun needToCreateNotificationChannel() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
     private fun getArgumentsPageNumber(): Long {
         val args = requireArguments()
@@ -78,6 +91,7 @@ class PageContentFragment : Fragment() {
 
     companion object {
         private const val PAGE_NUMBER = "PAGE_NUMBER"
+        private const val NOTIFICATION_CHANNEL_ID = "com.example.pecodetask"
 
         fun newInstance(data: PagerItem): PageContentFragment {
             val bundle = Bundle().apply {
