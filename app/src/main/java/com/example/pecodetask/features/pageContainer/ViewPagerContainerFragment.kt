@@ -33,6 +33,11 @@ class ViewPagerContainerFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        restoreStateOnCreation(savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewPager.adapter = pagerAdapter
         viewPager.registerOnPageChangeCallback(pageChangeCallback)
@@ -41,12 +46,7 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt("pages_count", pagerAdapter.itemCount)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        restoreStateOnCreation(savedInstanceState)
+        outState.putInt(PAGES_COUNT_BUNDLE_KEY, pagerAdapter.itemCount)
     }
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
@@ -67,8 +67,7 @@ class ViewPagerContainerFragment : Fragment() {
         pageIndicator.changePageNumber(savedPagesCount)
     }
 
-    private fun getSavedPagesCount(savedInstanceState: Bundle) =
-        savedInstanceState.getInt("pages_count", 1)
+    private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)
 
     private fun restoreMinusButtonVisibility(savedInstanceState: Bundle?) {
         if (wasFirstPageSelectedInBundle(savedInstanceState)) {
@@ -118,5 +117,9 @@ class ViewPagerContainerFragment : Fragment() {
         super.onDestroy()
         viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
+    }
+
+    companion object {
+        private const val PAGES_COUNT_BUNDLE_KEY = "PAGES_COUNT_BUNDLE_KEY"
     }
 }
