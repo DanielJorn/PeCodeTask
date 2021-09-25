@@ -31,6 +31,11 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         setItems(newList)
     }
 
+    fun setPageCount(pageCount: Int) {
+        val newList = List(pageCount) { pageIndex -> PagerItem((pageIndex + 1).toLong()) }
+        setItems(newList)
+    }
+
     private fun setItems(newItems: List<PagerItem>) {
         val callback = PagerDiffUtil(items, newItems)
         val diff = DiffUtil.calculateDiff(callback)

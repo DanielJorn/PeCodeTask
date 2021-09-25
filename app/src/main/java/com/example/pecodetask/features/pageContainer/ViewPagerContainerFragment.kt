@@ -9,8 +9,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
 import com.example.pecodetask.features.pageContainer.adapter.ViewPagerAdapter
 
-private const val TAG = "PagerContainerFragment"
-
 class ViewPagerContainerFragment : Fragment() {
     private var _binding: FragmentViewPagerContainerBinding? = null
     private val binding get() = _binding!!
@@ -31,8 +29,6 @@ class ViewPagerContainerFragment : Fragment() {
     ): View {
         _binding = FragmentViewPagerContainerBinding.inflate(inflater, container, false)
 
-        restoreStateOnCreation(savedInstanceState)
-
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -44,7 +40,37 @@ class ViewPagerContainerFragment : Fragment() {
         pageIndicator.minusButtonClickListener(::onMinusButtonClicked)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt("pages_count", pagerAdapter.itemCount)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        restoreStateOnCreation(savedInstanceState)
+    }
+
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
+        restoreMinusButtonVisibility(savedInstanceState)
+        restorePageNumberText(savedInstanceState)
+        restoreCountOfCreatedPages(savedInstanceState)
+    }
+
+    private fun restoreCountOfCreatedPages(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) return
+        val savedPagesCount = getSavedPagesCount(savedInstanceState)
+        pagerAdapter.setPageCount(savedPagesCount)
+    }
+
+    private fun restorePageNumberText(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) return
+        val savedPagesCount = getSavedPagesCount(savedInstanceState)
+        pageIndicator.changePageNumber(savedPagesCount)
+    }
+
+    private fun getSavedPagesCount(savedInstanceState: Bundle) =
+        savedInstanceState.getInt("pages_count", 1)
+
+    private fun restoreMinusButtonVisibility(savedInstanceState: Bundle?) {
         if (wasFirstPageSelectedInBundle(savedInstanceState)) {
             pageIndicator.hideMinusButtonInstantly()
         }
