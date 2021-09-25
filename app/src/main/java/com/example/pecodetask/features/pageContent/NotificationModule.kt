@@ -8,10 +8,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
+import dagger.hilt.components.SingletonComponent
 
 @Module
-@InstallIn(FragmentComponent::class)
-interface PageContentFeatureModule {
+@InstallIn(SingletonComponent::class)
+interface NotificationModule {
 
     @Binds
     fun bindsNotificationMemoryCache(inMemoryNotificationCache: InMemoryNotificationCache): NotificationCache

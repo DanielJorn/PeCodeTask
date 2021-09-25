@@ -4,4 +4,5 @@ import com.example.pecodetask.features.pageContent.domain.model.NotificationData
 
 interface NotificationCache {
     fun addNewNotification(pageNumber: Long): NotificationData
+    fun getNotificationCreatedByPageNumber(pageNumber: Int): List<Int>
 }

@@ -5,16 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
 import com.example.pecodetask.features.pageContainer.presentation.adapter.ViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import android.app.NotificationManager
 
+import android.R.attr.name
+import android.content.Context
+
+
+@AndroidEntryPoint
 class ViewPagerContainerFragment : Fragment() {
     private var _binding: FragmentViewPagerContainerBinding? = null
     private val binding get() = _binding!!
 
     private val viewPager get() = binding.viewPager
     private val pageIndicator get() = binding.pageIndicator
+
+    private val viewModel: ViewPagerContainerViewModel by viewModels()
 
     private val pagerAdapter by lazy { ViewPagerAdapter(this) }
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
@@ -38,6 +48,10 @@ class ViewPagerContainerFragment : Fragment() {
         viewPager.registerOnPageChangeCallback(pageChangeCallback)
         pageIndicator.plusButtonClickListener(::onPlusButtonClicked)
         pageIndicator.minusButtonClickListener(::onMinusButtonClicked)
+
+        viewModel.notificationsToDismiss.observe(viewLifecycleOwner) {
+            it.forEach(::cancelNotification)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -80,6 +94,12 @@ class ViewPagerContainerFragment : Fragment() {
         pageIndicator.changePageNumber(savedPagesCount)
     }
 
+    private fun cancelNotification(notificationId: Int) {
+        val ns = Context.NOTIFICATION_SERVICE
+        val nMgr = context?.getSystemService(ns) as NotificationManager?
+        nMgr?.cancel(notificationId)
+    }
+
     private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)
 
     private fun getSavedSelectedPage(state: Bundle) = state.getInt(SELECTED_PAGE_BUNDLE_KEY, 1)
@@ -99,6 +119,7 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun onMinusButtonClicked() {
+        viewModel.onMinusButtonClicked(pagerAdapter.itemCount)
         pagerAdapter.removePage()
     }
 

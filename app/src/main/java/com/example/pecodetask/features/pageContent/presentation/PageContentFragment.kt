@@ -47,18 +47,18 @@ class PageContentFragment : Fragment() {
     }
 
     private fun showNotification(data: NotificationData) {
+        val id = data.id
         val title = getString(R.string.notification_title)
         val text = getString(R.string.notification_text, data.pageNumber)
-        // val id = data.id
 
-        sendNotification(requireContext(), title, text)
+        sendNotification(requireContext(), id, title, text)
     }
 
     private fun sendNotification(
         context: Context,
+        notificationId: Int,
         title: String,
         text: String,
-        notificationId: Int = Random().nextInt()
     ) {
         val notificationManager = getNotificationManager(context)
 
