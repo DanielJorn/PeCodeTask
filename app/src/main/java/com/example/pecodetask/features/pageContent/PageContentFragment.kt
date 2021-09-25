@@ -34,7 +34,10 @@ class PageContentFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.notificationClick.observe(viewLifecycleOwner) {
-            it?.let { showNotification(it) }
+            val title = getString(R.string.notification_title)
+            val text = getString(R.string.notification_text, getArgumentsPageNumber())
+
+            showNotification(NotificationData(title, text))
         }
 
         return binding.root

@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 
 class PageContentViewModel(private val pageNumber: Long): ViewModel() {
 
-    private val _notificationClick = MutableLiveData<NotificationData>()
-    val notificationClick: LiveData<NotificationData> get() = _notificationClick
+    private val _notificationClick = MutableLiveData<Unit>()
+    val notificationClick: LiveData<Unit> get() = _notificationClick
 
     fun onNewNotificationClick(){
-        _notificationClick.value = NotificationData("title","text")
+        _notificationClick.value = Unit
     }
 }
