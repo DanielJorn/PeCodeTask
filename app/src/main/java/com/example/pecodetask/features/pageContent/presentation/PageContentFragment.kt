@@ -17,13 +17,20 @@ import com.example.pecodetask.R
 import com.example.pecodetask.databinding.FragmentPageContentBinding
 import com.example.pecodetask.features.pageContainer.domain.model.PageItem
 import com.example.pecodetask.features.pageContent.domain.model.NotificationData
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class PageContentFragment : Fragment() {
 
-    private val viewModel: PageContentViewModel by viewModels(
-        factoryProducer = { PageContentViewModelFactory(getArgumentsPageNumber()) }
-    )
+    private val argumentPageNumber get() = requireArguments().getLong(PAGE_NUMBER)
+
+    @Inject
+    lateinit var factory: PageContentViewModel.AssistedFactory
+    private val viewModel: PageContentViewModel by viewModels(factoryProducer = {
+        PageContentViewModel.provideFactory(factory, argumentPageNumber)
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +49,7 @@ class PageContentFragment : Fragment() {
     private fun showNotification(data: NotificationData) {
         val title = getString(R.string.notification_title)
         val text = getString(R.string.notification_text, data.pageNumber)
+        // val id = data.id
 
         sendNotification(requireContext(), title, text)
     }
@@ -91,10 +99,6 @@ class PageContentFragment : Fragment() {
 
     private fun needToCreateNotificationChannel() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
-    private fun getArgumentsPageNumber(): Long {
-        val args = requireArguments()
-        return args.getLong(PAGE_NUMBER)
-    }
 
     companion object {
         private const val PAGE_NUMBER = "PAGE_NUMBER"
