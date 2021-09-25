@@ -5,15 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.pecodetask.R
+import com.example.pecodetask.databinding.FragmentPageContentBinding
 import com.example.pecodetask.features.pageContainer.model.PagerItem
 
 class PageContentFragment: Fragment() {
+    private val viewModel: PageContentViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_page_content, container, false)
+    ): View {
+        val binding = FragmentPageContentBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val arguments = requireArguments()

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.pecodetask.features.pageContent.PageContentViewModel" />
@@ -15,11 +16,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/newNotification_btn"
+            style="@style/roundMaterialButton"
             android:layout_width="@dimen/pageContent_newNotificationBtn_size"
             android:layout_height="0dp"
             android:contentDescription="@string/pageContent_newNotificationBtn_contentDescription"
+            android:onClick="@{() -> viewModel.onNewNotificationClick()}"
             android:text="@string/pageContent_newNotificationBtn_text"
-            style="@style/roundMaterialButton"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
