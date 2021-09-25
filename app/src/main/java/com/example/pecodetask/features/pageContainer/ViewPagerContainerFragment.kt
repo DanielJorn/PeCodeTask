@@ -44,16 +44,6 @@ class ViewPagerContainerFragment : Fragment() {
         pageIndicator.minusButtonClickListener(::onMinusButtonClicked)
     }
 
-    private fun shouldScrollToCreatedPage(): Boolean {
-        val currentPage = viewPager.currentItem
-        val currentPageIsRightBeforeLastPage = currentPage == pagerAdapter.lastPageIndex - 1
-        return currentPageIsRightBeforeLastPage
-    }
-
-    private fun scrollToLastPage() {
-        viewPager.currentItem = pagerAdapter.lastPageIndex
-    }
-
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
         if (wasFirstPageSelectedInBundle(savedInstanceState)) {
             pageIndicator.hideMinusButtonInstantly()
@@ -66,12 +56,15 @@ class ViewPagerContainerFragment : Fragment() {
 
     private fun onPlusButtonClicked() {
         pagerAdapter.addPage()
-        if (shouldScrollToCreatedPage())
-            scrollToLastPage()
+        scrollToLastPage()
     }
 
     private fun onMinusButtonClicked() {
         pagerAdapter.removePage()
+    }
+
+    private fun scrollToLastPage() {
+        viewPager.currentItem = pagerAdapter.lastPageIndex
     }
 
     private fun onPageSelected(pageIndex: Int) {
