@@ -1,7 +1,7 @@
-package com.example.pecodetask.features.pageContainer.presentation
+package com.example.pecodetask.feature.page.presentation.pagecontainer
 
 import androidx.lifecycle.ViewModel
-import com.example.pecodetask.features.pageContainer.domain.usecase.DeleteNotificationsFromPageUseCase
+import com.example.pecodetask.feature.page.domain.usecase.DeleteNotificationsFromPageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

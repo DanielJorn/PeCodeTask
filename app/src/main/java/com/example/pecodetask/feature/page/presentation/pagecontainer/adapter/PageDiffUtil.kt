@@ -1,7 +1,7 @@
-package com.example.pecodetask.features.pageContainer.presentation.adapter
+package com.example.pecodetask.feature.page.presentation.pagecontainer.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.pecodetask.features.pageContainer.domain.model.PageItem
+import com.example.pecodetask.feature.page.domain.model.PageItem
 
 class PagerDiffUtil(private val oldList: List<PageItem>, private val newList: List<PageItem>) : DiffUtil.Callback() {
 

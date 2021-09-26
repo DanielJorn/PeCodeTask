@@ -1,9 +1,6 @@
-package com.example.pecodetask.features.pageContainer.presentation
+package com.example.pecodetask.feature.page.presentation.pagecontainer
 
-import android.app.NotificationManager
-import android.content.Context
 import android.os.Bundle
-import android.service.notification.StatusBarNotification
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
-import com.example.pecodetask.features.pageContainer.presentation.adapter.ViewPagerAdapter
+import com.example.pecodetask.feature.page.presentation.pagecontainer.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 

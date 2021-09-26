@@ -1,8 +1,8 @@
-package com.example.pecodetask.features.pageContent.presentation
+package com.example.pecodetask.feature.page.presentation.pagecontent
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.pecodetask.features.pageContent.domain.usecase.SendNotificationUseCase
+import com.example.pecodetask.feature.page.domain.usecase.SendNotificationUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 

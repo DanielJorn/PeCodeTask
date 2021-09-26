@@ -1,8 +1,8 @@
-package com.example.pecodetask.features.pageContent
+package com.example.pecodetask.feature.page
 
 import android.content.Context
-import com.example.pecodetask.features.pageContent.data.NotificationManagerImpl
-import com.example.pecodetask.features.pageContent.domain.NotificationManager
+import com.example.pecodetask.feature.page.data.notification.NotificationManagerImpl
+import com.example.pecodetask.feature.page.domain.NotificationManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

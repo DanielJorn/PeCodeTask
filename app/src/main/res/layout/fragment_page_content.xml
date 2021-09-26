@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.pecodetask.features.pageContent.presentation.PageContentViewModel" />
+            type="com.example.pecodetask.feature.page.presentation.pagecontent.PageContentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

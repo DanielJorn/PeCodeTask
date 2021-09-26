@@ -1,6 +1,6 @@
-package com.example.pecodetask.features.pageContainer.domain.usecase
+package com.example.pecodetask.feature.page.domain.usecase
 
-import com.example.pecodetask.features.pageContent.domain.NotificationManager
+import com.example.pecodetask.feature.page.domain.NotificationManager
 import javax.inject.Inject
 
 class DeleteNotificationsFromPageUseCase @Inject constructor(

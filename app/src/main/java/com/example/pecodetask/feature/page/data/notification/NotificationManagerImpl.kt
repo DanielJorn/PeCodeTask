@@ -1,4 +1,4 @@
-package com.example.pecodetask.features.pageContent.data
+package com.example.pecodetask.feature.page.data.notification
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,8 +9,8 @@ import android.service.notification.StatusBarNotification
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.pecodetask.R
-import com.example.pecodetask.features.pageContent.domain.NotificationManager
-import com.example.pecodetask.features.pageContent.domain.model.NotificationData
+import com.example.pecodetask.feature.page.domain.NotificationManager
+import com.example.pecodetask.feature.page.domain.model.NotificationData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.*
 import javax.inject.Inject

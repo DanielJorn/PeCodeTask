@@ -1,22 +1,13 @@
-package com.example.pecodetask.features.pageContent.presentation
+package com.example.pecodetask.feature.page.presentation.pagecontent
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.media.RingtoneManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.pecodetask.R
 import com.example.pecodetask.databinding.FragmentPageContentBinding
-import com.example.pecodetask.features.pageContainer.domain.model.PageItem
-import com.example.pecodetask.features.pageContent.domain.model.NotificationData
+import com.example.pecodetask.feature.page.domain.model.PageItem
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject

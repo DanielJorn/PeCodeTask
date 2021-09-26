@@ -1,10 +1,10 @@
-package com.example.pecodetask.features.pageContainer.presentation.adapter
+package com.example.pecodetask.feature.page.presentation.pagecontainer.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.pecodetask.features.pageContainer.domain.model.PageItem
-import com.example.pecodetask.features.pageContent.presentation.PageContentFragment
+import com.example.pecodetask.feature.page.domain.model.PageItem
+import com.example.pecodetask.feature.page.presentation.pagecontent.PageContentFragment
 import kotlin.math.max
 
 class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {

@@ -1,6 +1,6 @@
-package com.example.pecodetask.features.pageContent.domain
+package com.example.pecodetask.feature.page.domain
 
-import com.example.pecodetask.features.pageContent.domain.model.NotificationData
+import com.example.pecodetask.feature.page.domain.model.NotificationData
 
 interface NotificationManager {
     fun sendNotification(notificationData: NotificationData)

@@ -1,7 +1,7 @@
-package com.example.pecodetask.features.pageContent.domain.usecase
+package com.example.pecodetask.feature.page.domain.usecase
 
-import com.example.pecodetask.features.pageContent.domain.NotificationManager
-import com.example.pecodetask.features.pageContent.domain.model.NotificationData
+import com.example.pecodetask.feature.page.domain.NotificationManager
+import com.example.pecodetask.feature.page.domain.model.NotificationData
 import javax.inject.Inject
 
 class SendNotificationUseCase @Inject constructor(
