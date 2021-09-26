@@ -68,13 +68,25 @@ class ViewPagerContainerFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(PAGES_COUNT_BUNDLE_KEY, pagerAdapter.itemCount)
-        outState.putInt(SELECTED_PAGE_BUNDLE_KEY, viewPager.currentItem)
+        outState.putInt(SELECTED_PAGE_INDEX_BUNDLE_KEY, viewPager.currentItem)
     }
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
+        restoreMinusButtonVisibility(savedInstanceState)
         restorePageNumberText(savedInstanceState)
         restoreCountOfCreatedPages(savedInstanceState)
         restoreSelectedPage(savedInstanceState)
+    }
+
+    private fun restoreMinusButtonVisibility(state: Bundle?) {
+        val wasFirstPageRestored = state?.getInt(SELECTED_PAGE_INDEX_BUNDLE_KEY) == 0
+        val wasFirstPageInitiallySelected = navArguments.selectedPageNumber == 1
+        val wasFirstPageLaunched = wasFirstPageRestored || wasFirstPageInitiallySelected
+
+        when {
+            wasFirstPageLaunched -> pageIndicator.hideMinusButtonInstantly()
+            else -> pageIndicator.showMinusButton()
+        }
     }
 
     private fun restorePageNumberText(savedInstanceState: Bundle?) {
@@ -98,8 +110,8 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)
-
-    private fun getSavedSelectedPage(state: Bundle) = state.getInt(SELECTED_PAGE_BUNDLE_KEY, 1)
+    private fun getSavedSelectedPage(state: Bundle) =
+        state.getInt(SELECTED_PAGE_INDEX_BUNDLE_KEY, 1)
 
     private fun onPlusButtonClicked() {
         pagerAdapter.addPage()
@@ -144,6 +156,6 @@ class ViewPagerContainerFragment : Fragment() {
 
     companion object {
         private const val PAGES_COUNT_BUNDLE_KEY = "PAGES_COUNT_BUNDLE_KEY"
-        private const val SELECTED_PAGE_BUNDLE_KEY = "SELECTED_PAGE_BUNDLE_KEY"
+        private const val SELECTED_PAGE_INDEX_BUNDLE_KEY = "SELECTED_PAGE_INDEX_BUNDLE_KEY"
     }
 }
