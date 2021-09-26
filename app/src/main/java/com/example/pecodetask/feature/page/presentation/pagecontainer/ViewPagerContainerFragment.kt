@@ -1,7 +1,6 @@
 package com.example.pecodetask.feature.page.presentation.pagecontainer
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +45,7 @@ class ViewPagerContainerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupUi()
-        Log.d("TAG", "onViewCreated: ${navArguments.selectedPageNumber}")
+        navigateToPageFromArguments()
     }
 
     private fun setupUi() {
@@ -61,24 +60,21 @@ class ViewPagerContainerFragment : Fragment() {
         }
     }
 
+    private fun navigateToPageFromArguments() {
+        val selectedPage = navArguments.selectedPageNumber
+        pagerAdapter.setPageCount(selectedPage)
+        viewPager.currentItem = selectedPage
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(PAGES_COUNT_BUNDLE_KEY, pagerAdapter.itemCount)
         outState.putInt(SELECTED_PAGE_BUNDLE_KEY, viewPager.currentItem)
-        outState.putBoolean(MINUS_BUTTON_HIDDEN_BUNDLE_KEY, isMinusButtonHidden())
     }
 
     private fun restoreStateOnCreation(savedInstanceState: Bundle?) {
-        restoreMinusButtonVisibility(savedInstanceState)
         restorePageNumberText(savedInstanceState)
         restoreCountOfCreatedPages(savedInstanceState)
         restoreSelectedPage(savedInstanceState)
-    }
-
-    private fun restoreMinusButtonVisibility(savedInstanceState: Bundle?) {
-        when (wasMinusButtonHidden(savedInstanceState)) {
-            true -> pageIndicator.hideMinusButtonInstantly()
-            false -> pageIndicator.showMinusButton()
-        }
     }
 
     private fun restorePageNumberText(savedInstanceState: Bundle?) {
@@ -104,15 +100,6 @@ class ViewPagerContainerFragment : Fragment() {
     private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)
 
     private fun getSavedSelectedPage(state: Bundle) = state.getInt(SELECTED_PAGE_BUNDLE_KEY, 1)
-
-    private fun wasMinusButtonHidden(state: Bundle?): Boolean {
-        if (state == null) return true
-        return state.getBoolean(MINUS_BUTTON_HIDDEN_BUNDLE_KEY, true)
-    }
-
-    private fun isMinusButtonHidden() = isFirstPageSelected()
-
-    private fun isFirstPageSelected() = viewPager.currentItem == 0
 
     private fun onPlusButtonClicked() {
         pagerAdapter.addPage()
@@ -158,6 +145,5 @@ class ViewPagerContainerFragment : Fragment() {
     companion object {
         private const val PAGES_COUNT_BUNDLE_KEY = "PAGES_COUNT_BUNDLE_KEY"
         private const val SELECTED_PAGE_BUNDLE_KEY = "SELECTED_PAGE_BUNDLE_KEY"
-        private const val MINUS_BUTTON_HIDDEN_BUNDLE_KEY = "MINUS_BUTTON_HIDDEN_BUNDLE_KEY"
     }
 }
