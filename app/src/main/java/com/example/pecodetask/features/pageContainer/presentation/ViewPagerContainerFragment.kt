@@ -32,9 +32,10 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, state: Bundle?): View {
-        _binding = FragmentViewPagerContainerBinding.inflate(inflater, root, false)
+        _binding = FragmentViewPagerContainerBinding.inflate(inflater, root, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
 
-        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -114,9 +115,9 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun cancelNotification(tag: String, notificationId: Int) {
-        val ns = Context.NOTIFICATION_SERVICE
-        val nMgr = context?.getSystemService(ns) as NotificationManager?
-        nMgr?.cancel(tag, notificationId)
+        val notificationServiceName = Context.NOTIFICATION_SERVICE
+        val notificationManager = context?.getSystemService(notificationServiceName) as NotificationManager?
+        notificationManager?.cancel(tag, notificationId)
     }
 
     private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)

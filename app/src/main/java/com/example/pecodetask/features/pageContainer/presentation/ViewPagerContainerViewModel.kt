@@ -11,7 +11,7 @@ class ViewPagerContainerViewModel @Inject constructor() : ViewModel() {
     private val _notificationsToDismiss = MutableLiveData<Int>()
     val notificationsToDismiss: LiveData<Int> get() = _notificationsToDismiss
 
-    fun onMinusButtonClicked(pageNumber: Int) {
-        _notificationsToDismiss.value = pageNumber
+    fun onMinusButtonClicked(lastPageNumber: Int) {
+        _notificationsToDismiss.value = lastPageNumber
     }
 }
