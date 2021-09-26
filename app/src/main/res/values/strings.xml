@@ -4,4 +4,6 @@
     <string name="mainContainer_plusBtn_contentDescription">Plus button</string>
     <string name="pageContent_newNotificationBtn_text">Create new notification</string>
     <string name="pageContent_newNotificationBtn_contentDescription">New notification button</string>
+    <string name="notification_title">PeCode Test Task Title</string>
+    <string name="notification_text">Notification %d</string>
 </resources>

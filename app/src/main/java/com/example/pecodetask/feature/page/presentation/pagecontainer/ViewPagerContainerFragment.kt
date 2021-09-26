@@ -1,14 +1,17 @@
-package com.example.pecodetask.features.pageContainer
+package com.example.pecodetask.feature.page.presentation.pagecontainer
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
-import com.example.pecodetask.features.pageContainer.adapter.ViewPagerAdapter
+import com.example.pecodetask.feature.page.presentation.pagecontainer.adapter.ViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ViewPagerContainerFragment : Fragment() {
     private var _binding: FragmentViewPagerContainerBinding? = null
     private val binding get() = _binding!!
@@ -16,15 +19,19 @@ class ViewPagerContainerFragment : Fragment() {
     private val viewPager get() = binding.viewPager
     private val pageIndicator get() = binding.pageIndicator
 
+    private val viewModel: ViewPagerContainerViewModel by viewModels()
+    private val lastPageNumber get() = pagerAdapter.lastPageNumber
+
     private val pagerAdapter by lazy { ViewPagerAdapter(this) }
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(pageIndex: Int) = onNewPageSelected(pageIndex)
     }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, state: Bundle?): View {
-        _binding = FragmentViewPagerContainerBinding.inflate(inflater, root, false)
+        _binding = FragmentViewPagerContainerBinding.inflate(inflater, root, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
 
-        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -34,10 +41,15 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewPager.adapter = pagerAdapter
-        viewPager.registerOnPageChangeCallback(pageChangeCallback)
-        pageIndicator.plusButtonClickListener(::onPlusButtonClicked)
-        pageIndicator.minusButtonClickListener(::onMinusButtonClicked)
+        viewPager.apply {
+            adapter = pagerAdapter
+            registerOnPageChangeCallback(pageChangeCallback)
+        }
+
+        pageIndicator.apply {
+            plusButtonClickListener(::onPlusButtonClicked)
+            minusButtonClickListener(::onMinusButtonClicked)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -60,12 +72,10 @@ class ViewPagerContainerFragment : Fragment() {
         }
     }
 
-    private fun restoreSelectedPage(state: Bundle?) {
-        if (state == null) return
-        val savedSelectedPage = getSavedSelectedPage(state)
-
-        val needAnimation = false
-        viewPager.setCurrentItem(savedSelectedPage, needAnimation)
+    private fun restorePageNumberText(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) return
+        val savedPagesCount = getSavedPagesCount(savedInstanceState)
+        pageIndicator.changePageNumber(savedPagesCount)
     }
 
     private fun restoreCountOfCreatedPages(savedInstanceState: Bundle?) {
@@ -74,10 +84,12 @@ class ViewPagerContainerFragment : Fragment() {
         pagerAdapter.setPageCount(savedPagesCount)
     }
 
-    private fun restorePageNumberText(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) return
-        val savedPagesCount = getSavedPagesCount(savedInstanceState)
-        pageIndicator.changePageNumber(savedPagesCount)
+    private fun restoreSelectedPage(state: Bundle?) {
+        if (state == null) return
+        val savedSelectedPage = getSavedSelectedPage(state)
+
+        val needAnimation = false
+        viewPager.setCurrentItem(savedSelectedPage, needAnimation)
     }
 
     private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)
@@ -99,6 +111,7 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun onMinusButtonClicked() {
+        viewModel.onMinusButtonClicked(lastPageNumber)
         pagerAdapter.removePage()
     }
 

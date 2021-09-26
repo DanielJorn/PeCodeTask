@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/containerFragment"
-        android:name="com.example.pecodetask.features.pageContainer.ViewPagerContainerFragment"
+        android:name="com.example.pecodetask.feature.page.presentation.pagecontainer.ViewPagerContainerFragment"
         android:label="View Pager Container"
         tools:layout="@layout/fragment_view_pager_container" />
 </navigation>
