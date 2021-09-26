@@ -1,17 +1,16 @@
 package com.example.pecodetask.features.pageContainer.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.pecodetask.features.pageContainer.domain.usecase.DeleteNotificationsFromPageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewPagerContainerViewModel @Inject constructor() : ViewModel() {
-    private val _notificationsToDismiss = MutableLiveData<Int>()
-    val notificationsToDismiss: LiveData<Int> get() = _notificationsToDismiss
+class ViewPagerContainerViewModel @Inject constructor(
+    private val deleteNotificationsFromPageUseCase: DeleteNotificationsFromPageUseCase
+) : ViewModel() {
 
     fun onMinusButtonClicked(lastPageNumber: Int) {
-        _notificationsToDismiss.value = lastPageNumber
+        deleteNotificationsFromPageUseCase.deleteNotificationsFromPage(lastPageNumber)
     }
 }

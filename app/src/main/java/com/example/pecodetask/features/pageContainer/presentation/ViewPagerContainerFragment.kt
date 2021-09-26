@@ -49,29 +49,6 @@ class ViewPagerContainerFragment : Fragment() {
         viewPager.registerOnPageChangeCallback(pageChangeCallback)
         pageIndicator.plusButtonClickListener(::onPlusButtonClicked)
         pageIndicator.minusButtonClickListener(::onMinusButtonClicked)
-
-        viewModel.notificationsToDismiss.observe(viewLifecycleOwner) {
-            cancelNotificationsFromPage(it)
-            pagerAdapter.removePage()
-        }
-    }
-
-    private fun cancelNotificationsFromPage(pageNumber: Int) {
-        val activeNotifications = getActiveNotifications()
-        activeNotifications.forEach { notification ->
-            if (wasNotificationSentFromPageWeDelete(notification, pageNumber))
-                cancelNotification(notification.tag, notification.id)
-        }
-    }
-
-    private fun wasNotificationSentFromPageWeDelete(
-        notification: StatusBarNotification, pageNumber: Int
-    ) = notification.tag == "$pageNumber"
-
-    private fun getActiveNotifications(): Array<out StatusBarNotification> {
-        val notificationServiceName = Context.NOTIFICATION_SERVICE
-        val notificationManager = requireContext().getSystemService(notificationServiceName) as NotificationManager
-        return notificationManager.activeNotifications
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -114,12 +91,6 @@ class ViewPagerContainerFragment : Fragment() {
         pageIndicator.changePageNumber(savedPagesCount)
     }
 
-    private fun cancelNotification(tag: String, notificationId: Int) {
-        val notificationServiceName = Context.NOTIFICATION_SERVICE
-        val notificationManager = context?.getSystemService(notificationServiceName) as NotificationManager?
-        notificationManager?.cancel(tag, notificationId)
-    }
-
     private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)
 
     private fun getSavedSelectedPage(state: Bundle) = state.getInt(SELECTED_PAGE_BUNDLE_KEY, 1)
@@ -140,6 +111,7 @@ class ViewPagerContainerFragment : Fragment() {
 
     private fun onMinusButtonClicked() {
         viewModel.onMinusButtonClicked(lastPageNumber)
+        pagerAdapter.removePage()
     }
 
     private fun scrollToLastPage() {

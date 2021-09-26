@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.content.Context
 import android.media.RingtoneManager
 import android.os.Build
+import android.service.notification.StatusBarNotification
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.pecodetask.R
@@ -23,6 +24,7 @@ class NotificationManagerImpl @Inject constructor(
     private val androidNotificationManager
         get() =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+    private val activeNotifications get() = androidNotificationManager.activeNotifications
 
     override fun sendNotification(notificationData: NotificationData) {
         if (needToCreateNotificationChannel())
@@ -33,22 +35,20 @@ class NotificationManagerImpl @Inject constructor(
         sendNotification(title, text, notificationData.pageNumber)
     }
 
-    private fun sendNotification(
-        title: String,
-        text: String,
-        pageNumber: Int,
-    ) {
+    override fun deleteNotificationsFromPage(pageNumberToDelete: Int) {
+        activeNotifications
+            .filter { wasNotificationSentFromPage(it, pageNumberToDelete) }
+            .forEach { cancelNotification(it.tag, it.id) }
+    }
+
+    private fun sendNotification(title: String, text: String, pageNumber: Int, ) {
         val tag = "$pageNumber"
         val notificationId = Random().nextInt()
         val notification = createNotification(context, title, text)
         androidNotificationManager.notify(tag, notificationId, notification)
     }
 
-    private fun createNotification(
-        context: Context,
-        title: String,
-        text: String
-    ): Notification {
+    private fun createNotification(context: Context, title: String, text: String): Notification {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.pecode_logo)
@@ -70,6 +70,14 @@ class NotificationManagerImpl @Inject constructor(
     }
 
     private fun needToCreateNotificationChannel() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+
+    private fun wasNotificationSentFromPage(
+        notification: StatusBarNotification, pageNumber: Int
+    ) = notification.tag == "$pageNumber"
+
+    private fun cancelNotification(tag: String, notificationId: Int) {
+        androidNotificationManager.cancel(tag, notificationId)
+    }
 
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "NotificationManagerImpl"
