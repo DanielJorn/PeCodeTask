@@ -9,5 +9,11 @@
         android:id="@+id/containerFragment"
         android:name="com.example.pecodetask.feature.page.presentation.pagecontainer.ViewPagerContainerFragment"
         android:label="View Pager Container"
-        tools:layout="@layout/fragment_view_pager_container" />
+        tools:layout="@layout/fragment_view_pager_container">
+        <argument
+            android:name="selectedPageIndex"
+            app:argType="integer"
+            android:defaultValue="0"
+            app:nullable="false"/>
+    </fragment>
 </navigation>
