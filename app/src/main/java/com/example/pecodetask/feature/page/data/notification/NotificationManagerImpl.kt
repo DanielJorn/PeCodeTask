@@ -5,9 +5,11 @@ import android.app.NotificationChannel
 import android.content.Context
 import android.media.RingtoneManager
 import android.os.Build
+import android.os.Bundle
 import android.service.notification.StatusBarNotification
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.example.pecodetask.R
 import com.example.pecodetask.feature.page.domain.NotificationManager
 import com.example.pecodetask.feature.page.domain.model.NotificationData
@@ -42,20 +44,34 @@ class NotificationManagerImpl @Inject constructor(
     private fun sendNotification(title: String, text: String, pageNumber: Int) {
         val tag = "$pageNumber"
         val notificationId = Random().nextInt()
-        val notification = createNotification(context, title, text)
+        val notification = createNotification(context, title, text, pageNumber)
         androidNotificationManager.notify(tag, notificationId, notification)
     }
 
-    private fun createNotification(context: Context, title: String, text: String): Notification {
+    private fun createNotification(
+        context: Context,
+        title: String,
+        text: String,
+        pageNumber: Int
+    ): Notification {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val intent = constructIntent(pageNumber)
+
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.pecode_logo)
             .setContentTitle(title)
             .setContentText(text)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
+            .setContentIntent(intent)
             .build()
     }
+
+    private fun constructIntent(selectedPageNumber: Int) = NavDeepLinkBuilder(context)
+        .setGraph(R.navigation.nav_graph)
+        .setDestination(R.id.containerFragment)
+        .setArguments(Bundle().apply { putInt("selectedPageNumber", selectedPageNumber) })
+        .createPendingIntent()
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {

@@ -1,11 +1,13 @@
 package com.example.pecodetask.feature.page.presentation.pagecontainer
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
 import com.example.pecodetask.feature.page.presentation.pagecontainer.adapter.ViewPagerAdapter
@@ -21,6 +23,8 @@ class ViewPagerContainerFragment : Fragment() {
 
     private val viewModel: ViewPagerContainerViewModel by viewModels()
     private val lastPageNumber get() = pagerAdapter.lastPageNumber
+
+    private val navArguments: ViewPagerContainerFragmentArgs by navArgs()
 
     private val pagerAdapter by lazy { ViewPagerAdapter(this) }
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
@@ -41,6 +45,11 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupUi()
+        Log.d("TAG", "onViewCreated: ${navArguments.selectedPageNumber}")
+    }
+
+    private fun setupUi() {
         viewPager.apply {
             adapter = pagerAdapter
             registerOnPageChangeCallback(pageChangeCallback)
