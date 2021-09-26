@@ -10,10 +10,10 @@ class PagerDiffUtil(private val oldList: List<PageItem>, private val newList: Li
     override fun getNewListSize() = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].pageNumber == newList[newItemPosition].pageNumber
+        return oldList[oldItemPosition].pageIndex == newList[newItemPosition].pageIndex
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].pageNumber == newList[newItemPosition].pageNumber
+        return oldList[oldItemPosition].pageIndex == newList[newItemPosition].pageIndex
     }
 }

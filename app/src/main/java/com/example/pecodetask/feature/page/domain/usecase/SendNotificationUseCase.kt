@@ -7,7 +7,7 @@ import javax.inject.Inject
 class SendNotificationUseCase @Inject constructor(
     private val notificationManager: NotificationManager
 ) {
-    fun sendNotification(pageNumber: Int) {
-        notificationManager.sendNotification(NotificationData(pageNumber))
+    fun sendNotification(pageIndex: Int) {
+        notificationManager.sendNotification(NotificationData(pageIndex))
     }
 }

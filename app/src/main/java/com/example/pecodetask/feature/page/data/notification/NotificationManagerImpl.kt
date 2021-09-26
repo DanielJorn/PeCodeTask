@@ -31,8 +31,8 @@ class NotificationManagerImpl @Inject constructor(
             createNotificationChannel()
 
         val title = context.getString(R.string.notification_title)
-        val text = context.getString(R.string.notification_text, notificationData.pageNumber)
-        sendNotification(title, text, notificationData.pageNumber)
+        val text = context.getString(R.string.notification_text, notificationData.pageIndex + 1)
+        sendNotification(title, text, notificationData.pageIndex)
     }
 
     override fun deleteNotificationsFromPage(pageNumberToDelete: Int) {
@@ -52,10 +52,10 @@ class NotificationManagerImpl @Inject constructor(
         context: Context,
         title: String,
         text: String,
-        pageNumber: Int
+        pageIndex: Int
     ): Notification {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val intent = constructIntent(pageNumber)
+        val intent = constructIntent(pageIndex)
 
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.pecode_logo)
@@ -67,10 +67,10 @@ class NotificationManagerImpl @Inject constructor(
             .build()
     }
 
-    private fun constructIntent(selectedPageNumber: Int) = NavDeepLinkBuilder(context)
+    private fun constructIntent(selectedPageIndex: Int) = NavDeepLinkBuilder(context)
         .setGraph(R.navigation.nav_graph)
         .setDestination(R.id.containerFragment)
-        .setArguments(Bundle().apply { putInt("selectedPageNumber", selectedPageNumber) })
+        .setArguments(Bundle().apply { putInt("selectedPageIndex", selectedPageIndex) })
         .createPendingIntent()
 
     @RequiresApi(Build.VERSION_CODES.O)

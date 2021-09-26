@@ -15,12 +15,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PageContentFragment : Fragment() {
 
-    private val argumentPageNumber get() = requireArguments().getInt(PAGE_NUMBER)
+    private val argumentPageIndex get() = requireArguments().getInt(PAGE_INDEX)
 
     @Inject
     lateinit var factory: PageContentViewModel.AssistedFactory
     private val viewModel: PageContentViewModel by viewModels(factoryProducer = {
-        PageContentViewModel.provideFactory(factory, argumentPageNumber)
+        PageContentViewModel.provideFactory(factory, argumentPageIndex)
     })
 
     override fun onCreateView(
@@ -37,11 +37,11 @@ class PageContentFragment : Fragment() {
     }
 
     companion object {
-        private const val PAGE_NUMBER = "PAGE_NUMBER"
+        private const val PAGE_INDEX = "PAGE_INDEX"
 
         fun newInstance(data: PageItem): PageContentFragment {
             val bundle = Bundle().apply {
-                putInt(PAGE_NUMBER, data.pageNumber)
+                putInt(PAGE_INDEX, data.pageIndex)
             }
 
             return PageContentFragment().apply {
