@@ -10,7 +10,7 @@ import dagger.assisted.AssistedInject
 import java.util.*
 
 class PageContentViewModel @AssistedInject constructor(
-    @Assisted private val pageNumber: Long
+    @Assisted private val pageNumber: Int
 ) : ViewModel() {
 
     private val _notificationClick = MutableLiveData<NotificationData>()
@@ -23,13 +23,13 @@ class PageContentViewModel @AssistedInject constructor(
 
     @dagger.assisted.AssistedFactory
     interface AssistedFactory {
-        fun create(itemId: Long): PageContentViewModel
+        fun create(itemId: Int): PageContentViewModel
     }
 
     companion object {
         fun provideFactory(
             assistedFactory: AssistedFactory,
-            itemId: Long
+            itemId: Int
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return assistedFactory.create(itemId) as T

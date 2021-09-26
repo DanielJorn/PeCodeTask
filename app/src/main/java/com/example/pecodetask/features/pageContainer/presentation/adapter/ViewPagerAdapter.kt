@@ -13,14 +13,14 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     override fun createFragment(position: Int) = PageContentFragment.newInstance(items[position])
     override fun getItemCount() = items.size
-    override fun getItemId(position: Int) = items[position].pageNumber
-    override fun containsItem(itemId: Long) = items.any { it.pageNumber == itemId }
+    override fun getItemId(position: Int) = items[position].pageNumber.toLong()
+    override fun containsItem(itemId: Long) = items.any { it.pageNumber == itemId.toInt() }
 
     val lastPageIndex get() = max(0, itemCount - 1)
     val lastPageNumber get() = itemCount
 
     fun addPage() {
-        val newPage = PageItem((itemCount + 1).toLong())
+        val newPage = PageItem(itemCount + 1)
         val newList = items.toMutableList()
         newList.add(newPage)
         setItems(newList)
@@ -33,7 +33,7 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     }
 
     fun setPageCount(pageCount: Int) {
-        val newList = List(pageCount) { pageIndex -> PageItem((pageIndex + 1).toLong()) }
+        val newList = List(pageCount) { pageIndex -> PageItem(pageIndex + 1) }
         setItems(newList)
     }
 

@@ -24,7 +24,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PageContentFragment : Fragment() {
 
-    private val argumentPageNumber get() = requireArguments().getLong(PAGE_NUMBER)
+    private val argumentPageNumber get() = requireArguments().getInt(PAGE_NUMBER)
 
     @Inject
     lateinit var factory: PageContentViewModel.AssistedFactory
@@ -107,7 +107,7 @@ class PageContentFragment : Fragment() {
 
         fun newInstance(data: PageItem): PageContentFragment {
             val bundle = Bundle().apply {
-                putLong(PAGE_NUMBER, data.pageNumber)
+                putInt(PAGE_NUMBER, data.pageNumber)
             }
 
             return PageContentFragment().apply {
