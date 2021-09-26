@@ -18,12 +18,10 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val androidNotificationManager: android.app.NotificationManager
 ) : NotificationManager {
 
-    private val androidNotificationManager
-        get() =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
     private val activeNotifications get() = androidNotificationManager.activeNotifications
 
     override fun sendNotification(notificationData: NotificationData) {
@@ -41,7 +39,7 @@ class NotificationManagerImpl @Inject constructor(
             .forEach { cancelNotification(it.tag, it.id) }
     }
 
-    private fun sendNotification(title: String, text: String, pageNumber: Int, ) {
+    private fun sendNotification(title: String, text: String, pageNumber: Int) {
         val tag = "$pageNumber"
         val notificationId = Random().nextInt()
         val notification = createNotification(context, title, text)
