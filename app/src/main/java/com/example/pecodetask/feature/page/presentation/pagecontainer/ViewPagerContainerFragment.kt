@@ -11,7 +11,6 @@ import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
 import com.example.pecodetask.feature.page.presentation.pagecontainer.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class ViewPagerContainerFragment : Fragment() {
     private var _binding: FragmentViewPagerContainerBinding? = null
@@ -42,10 +41,15 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewPager.adapter = pagerAdapter
-        viewPager.registerOnPageChangeCallback(pageChangeCallback)
-        pageIndicator.plusButtonClickListener(::onPlusButtonClicked)
-        pageIndicator.minusButtonClickListener(::onMinusButtonClicked)
+        viewPager.apply {
+            adapter = pagerAdapter
+            registerOnPageChangeCallback(pageChangeCallback)
+        }
+
+        pageIndicator.apply {
+            plusButtonClickListener(::onPlusButtonClicked)
+            minusButtonClickListener(::onMinusButtonClicked)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -68,12 +72,10 @@ class ViewPagerContainerFragment : Fragment() {
         }
     }
 
-    private fun restoreSelectedPage(state: Bundle?) {
-        if (state == null) return
-        val savedSelectedPage = getSavedSelectedPage(state)
-
-        val needAnimation = false
-        viewPager.setCurrentItem(savedSelectedPage, needAnimation)
+    private fun restorePageNumberText(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) return
+        val savedPagesCount = getSavedPagesCount(savedInstanceState)
+        pageIndicator.changePageNumber(savedPagesCount)
     }
 
     private fun restoreCountOfCreatedPages(savedInstanceState: Bundle?) {
@@ -82,10 +84,12 @@ class ViewPagerContainerFragment : Fragment() {
         pagerAdapter.setPageCount(savedPagesCount)
     }
 
-    private fun restorePageNumberText(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) return
-        val savedPagesCount = getSavedPagesCount(savedInstanceState)
-        pageIndicator.changePageNumber(savedPagesCount)
+    private fun restoreSelectedPage(state: Bundle?) {
+        if (state == null) return
+        val savedSelectedPage = getSavedSelectedPage(state)
+
+        val needAnimation = false
+        viewPager.setCurrentItem(savedSelectedPage, needAnimation)
     }
 
     private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)

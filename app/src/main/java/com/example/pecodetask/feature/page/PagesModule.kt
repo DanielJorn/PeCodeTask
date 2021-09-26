@@ -19,7 +19,7 @@ interface PagesModule {
 
     companion object {
         @Provides
-        fun providesAndroidNotificationManager(@ApplicationContext context: Context): android.app.NotificationManager{
+        fun providesAndroidNotificationManager(@ApplicationContext context: Context): android.app.NotificationManager {
             return context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
         }
     }
