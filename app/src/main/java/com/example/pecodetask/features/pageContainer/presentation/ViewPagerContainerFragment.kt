@@ -1,6 +1,9 @@
 package com.example.pecodetask.features.pageContainer.presentation
 
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
+import android.service.notification.StatusBarNotification
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +13,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.pecodetask.databinding.FragmentViewPagerContainerBinding
 import com.example.pecodetask.features.pageContainer.presentation.adapter.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import android.app.NotificationManager
-
-import android.R.attr.name
-import android.content.Context
 
 
 @AndroidEntryPoint
@@ -25,6 +24,7 @@ class ViewPagerContainerFragment : Fragment() {
     private val pageIndicator get() = binding.pageIndicator
 
     private val viewModel: ViewPagerContainerViewModel by viewModels()
+    private val lastPageNumber get() = pagerAdapter.lastPageNumber
 
     private val pagerAdapter by lazy { ViewPagerAdapter(this) }
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
@@ -50,8 +50,27 @@ class ViewPagerContainerFragment : Fragment() {
         pageIndicator.minusButtonClickListener(::onMinusButtonClicked)
 
         viewModel.notificationsToDismiss.observe(viewLifecycleOwner) {
-            it.forEach(::cancelNotification)
+            cancelNotificationsFromPage(it)
+            pagerAdapter.removePage()
         }
+    }
+
+    private fun cancelNotificationsFromPage(pageNumber: Int) {
+        val activeNotifications = getActiveNotifications()
+        activeNotifications.forEach { notification ->
+            if (wasNotificationSentFromPageWeDelete(notification, pageNumber))
+                cancelNotification(notification.tag, notification.id)
+        }
+    }
+
+    private fun wasNotificationSentFromPageWeDelete(
+        notification: StatusBarNotification, pageNumber: Int
+    ) = notification.tag == "$pageNumber"
+
+    private fun getActiveNotifications(): Array<out StatusBarNotification> {
+        val notificationServiceName = Context.NOTIFICATION_SERVICE
+        val notificationManager = requireContext().getSystemService(notificationServiceName) as NotificationManager
+        return notificationManager.activeNotifications
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -94,10 +113,10 @@ class ViewPagerContainerFragment : Fragment() {
         pageIndicator.changePageNumber(savedPagesCount)
     }
 
-    private fun cancelNotification(notificationId: Int) {
+    private fun cancelNotification(tag: String, notificationId: Int) {
         val ns = Context.NOTIFICATION_SERVICE
         val nMgr = context?.getSystemService(ns) as NotificationManager?
-        nMgr?.cancel(notificationId)
+        nMgr?.cancel(tag, notificationId)
     }
 
     private fun getSavedPagesCount(state: Bundle) = state.getInt(PAGES_COUNT_BUNDLE_KEY, 1)
@@ -119,8 +138,7 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun onMinusButtonClicked() {
-        viewModel.onMinusButtonClicked(pagerAdapter.itemCount)
-        pagerAdapter.removePage()
+        viewModel.onMinusButtonClicked(lastPageNumber)
     }
 
     private fun scrollToLastPage() {

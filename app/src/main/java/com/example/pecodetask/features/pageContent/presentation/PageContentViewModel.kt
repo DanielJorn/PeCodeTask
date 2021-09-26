@@ -4,22 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.pecodetask.features.pageContent.domain.NotificationRepository
 import com.example.pecodetask.features.pageContent.domain.model.NotificationData
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import java.util.*
 
 class PageContentViewModel @AssistedInject constructor(
-    private val notificationRepository: NotificationRepository,
     @Assisted private val pageNumber: Long
 ) : ViewModel() {
 
     private val _notificationClick = MutableLiveData<NotificationData>()
-    val notificationClick: LiveData<NotificationData> get() = _notificationClick
+    val onNotificationClick: LiveData<NotificationData> get() = _notificationClick
 
     fun onNewNotificationClick() {
-        val createdNotification = notificationRepository.saveNewNotification(pageNumber)
-        _notificationClick.postValue(createdNotification)
+        val id = Random().nextInt()
+        _notificationClick.postValue(NotificationData(id, pageNumber))
     }
 
     @dagger.assisted.AssistedFactory

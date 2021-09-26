@@ -17,6 +17,7 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun containsItem(itemId: Long) = items.any { it.pageNumber == itemId }
 
     val lastPageIndex get() = max(0, itemCount - 1)
+    val lastPageNumber get() = itemCount
 
     fun addPage() {
         val newPage = PageItem((itemCount + 1).toLong())

@@ -41,22 +41,20 @@ class PageContentFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.notificationClick.observe(viewLifecycleOwner) { showNotification(it) }
+        viewModel.onNotificationClick.observe(viewLifecycleOwner) { showNotification(it) }
 
         return binding.root
     }
 
     private fun showNotification(data: NotificationData) {
-        val id = data.id
         val title = getString(R.string.notification_title)
         val text = getString(R.string.notification_text, data.pageNumber)
 
-        sendNotification(requireContext(), id, title, text)
+        sendNotification(requireContext(), title, text)
     }
 
     private fun sendNotification(
         context: Context,
-        notificationId: Int,
         title: String,
         text: String,
     ) {
@@ -67,7 +65,10 @@ class PageContentFragment : Fragment() {
         }
 
         val notificationBuilder = createNotificationBuilder(context, title, text)
-        notificationManager.notify(notificationId, notificationBuilder.build())
+
+        val tag = "$argumentPageNumber"
+        val notificationId: Int = Random().nextInt()
+        notificationManager.notify(tag, notificationId, notificationBuilder.build())
     }
 
     private fun getNotificationManager(context: Context) =
